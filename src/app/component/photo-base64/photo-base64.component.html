@@ -1,0 +1,66 @@
+<div class="form-group">
+       
+
+
+          <ion-row>
+              <ion-col size="8" offset="2" style="margin-top:100px;">
+                Product Name  <input type="text" [(ngModel)]="productName" #name> 
+                Product Type  <input type="text" [(ngModel)]="productType"  #date > 
+                  <ion-button class="btn btn-secondary" (click)="addToIndexDB()" >Add to DB</ion-button>
+                  <ion-button class="btn btn-success" (click)="getIndexDB()" >Get From Db</ion-button>
+                  <ion-button class="btn btn-success" (click)="updateDB()" >Update  Db</ion-button>
+                </ion-col>
+                </ion-row>
+                <ion-row >
+                    <ion-col size="4" offset="4">
+                    <ion-list style="max-height:300px;overflow: scroll">
+                        <ion-item *ngFor="let item of savedInDB">
+                           <span> {{item.productName}}</span>
+                           <span>     &nbsp; {{item.mfgDate}}</span> 
+
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+                </ion-row>
+      <label>Upload Logo</label>
+      {{imageError}}
+      <div class="custom-file fileInputProfileWrap">
+          
+          <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+          <div class="img-space">
+
+              <ng-container *ngIf="isImageSaved; else elseTemplate">
+                  <img  height="500" width="500" [src]="cardImageBase64" />
+              </ng-container>
+              <ng-template #elseTemplate>
+
+                  <img src="./../../assets/placeholder.png" class="img-responsive">
+              </ng-template>
+
+          </div>
+
+      </div>
+      
+      <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+      <ion-button class="btn btn-primary" (click)="getAllFIles()" >Get All files </ion-button>
+      <ion-button class="btn btn-danger" (click)="clearList()" >clear</ion-button>
+      
+  
+      <ion-row  *ngIf="clicked">
+          <ion-col size="8" offset="2">
+             <ion-list  style="max-height:500px;overflow-y: scroll;border:1px solid black">
+                    <ion-row   *ngFor="let obj of allFiles">
+                
+                    <ion-col size="6" style="float:left;display:flex;align-content:flex-start">
+                <a (click)="showFile(obj)">{{obj?.name}}</a>  
+            </ion-col>
+                <ion-col size="6"*ngIf="singleImageBase64[obj.name]">
+                        <img  height="100" width="100" align="right" [src]="_DomSanitizationService.bypassSecurityTrustUrl(singleImageBase64[obj.name])"/>
+                </ion-col>
+           
+               
+            </ion-row>
+      </ion-list>
+    </ion-col>
+    </ion-row>
+</div>
